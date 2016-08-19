@@ -14,16 +14,16 @@ var UserSchema = new Schema({
 		required: true,
 		select: false
 	},
-	createdAtDate: { type: Date, default: Date.now	},
-	profilePicturePath: String //User ID_pic.jpg on images folder
+	createdAtDate: {type: Date, default: Date.now},
+	profilePicturePath: String,//User ID_pic.jpg on images folder
 	userAddressStreet: String,
 	userAddressCity: String,
 	userAddressRegion: String,
 	userAddressCountry: String,
-	userAge: { type: Number }
-	eventsCreated: [event],
-	eventsParticipate: [event],
-	messages: [message]
+	userAge: {type: Number}
+	//eventsCreated: [event],
+	//eventsParticipate: [event],
+	//messages: [message]
 });
 
 
