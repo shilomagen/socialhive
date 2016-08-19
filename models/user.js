@@ -6,9 +6,24 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
-	name: String,
-	username: String,
-	password: {type: String}
+	firstName: String,
+	lastName: String,
+	emailAddress: String,
+	password: {
+		type: String,
+		required: true,
+		select: false
+	},
+	createdAtDate: { type: Date, default: Date.now	},
+	profilePicturePath: String //User ID_pic.jpg on images folder
+	userAddressStreet: String,
+	userAddressCity: String,
+	userAddressRegion: String,
+	userAddressCountry: String,
+	userAge: { type: Number }
+	eventsCreated: [event],
+	eventsParticipate: [event],
+	messages: [message]
 });
 
 
