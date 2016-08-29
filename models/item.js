@@ -2,8 +2,8 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var itemSchema = new Schema({
-	itemName: String,
-	checked: Boolean,
+	name: String,
+	isChecked: Boolean,
 	responsibilityUserID: String
 });
 

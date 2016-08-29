@@ -3,19 +3,19 @@
  */
 var express = require('express');
 var apiRouter = express.Router();
-var Event = require('./models/event');
+var Event = require('./../models/event');
+var Item = require('./../models/item');
+var mongoose = require('mongoose');
 
 apiRouter.use(function(req, res, next) {
-
-	//TODO: user authenticaion
 	console.log("api used!");
 	next();
 });
 
 apiRouter.route('/events')
 	.get(function(req, res) {
-		Event.find(function(err, events){
-			if (err){
+		Event.find(function(err, events) {
+			if (err) {
 				res.json({
 					success: false,
 					msg: err
@@ -100,6 +100,66 @@ apiRouter.route('/events/create')
 			})
 		})
 	});
+
+apiRouter.route('/events/:event_id/addUser')
+	.post(function(req, res) {
+		Event.findById(req.params.event_id, function(err, event) {
+			if (err) {
+				res.json({
+					success: false,
+					msg: err
+				});
+			} else {
+				event.participants.push({
+					name: req.body.name,
+					rsvp: req.body.rsvp
+				});
+				event.save(function(err) {
+					if (err) {
+						res.json({
+							success: false,
+							msg: err
+						});
+					} else {
+						res.send(event);
+					}
+				})
+			}
+
+		});
+	});
+apiRouter.route('/events/:event_id/addItem')
+	.post(function(req, res) {
+		Event.findById(req.params.event_id, function(err, event) {
+			if (err) {
+				res.json({
+					success: false,
+					msg: err
+				});
+			} else {
+				var item = new Item();
+				item.name = req.body.name;
+				item.isChecked = req.body.isChecked;
+				item.responsibilityUserID = req.body.responsibilityUserID;
+				item.save(function(err) {
+					if (err) {
+						res.json({
+							success: false,
+							msg: err
+						});
+					}
+					console.log(item._id);
+				});
+				event.items.push(mongoose.Types.ObjectId(item._id));
+				res.send({
+					success: true,
+					msg: item,
+					event: event
+				});
+			}
+		});
+	})
+;
 
 
 module.exports = apiRouter;
