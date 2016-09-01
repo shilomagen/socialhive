@@ -33,7 +33,6 @@ userRouter.use(function(req, res, next) {
 					});
 				}
 				next();
-		
 			}
 		);
 
@@ -44,12 +43,13 @@ userRouter.use(function(req, res, next) {
 		});
 	}
 
-})
-;
+});
+
 userRouter.route('/register')
 	.post(function(req, res) {
 		var user = new User();
-		user.firstName = req.body.firstName;
+		user.firstName = req.body.fname;
+		user.lastname = req.body.lname;
 		user.email = req.body.email;
 		user.setPassword(req.body.password);
 		user.save(function(err) {
@@ -68,6 +68,7 @@ userRouter.route('/register')
 			}
 		});
 	});
+
 userRouter.route('/login')
 	.post(function(req, res) {
 		var email = req.body.email;

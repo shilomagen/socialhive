@@ -35,7 +35,7 @@ app.use(passport.initialize());
 app.use('/api' ,eventRouter);
 app.use('/user', userRouter);
 
-
+app.use(express.static(__dirname + '/public'));
 var User = require("./models/user");
 
 app.listen(port);

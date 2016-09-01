@@ -16,18 +16,15 @@ var eventSchema = new Schema({
 	endDate: {type: Date, default: Date.now},
 	participants: [
 		{
-			name: String,
+			userID: Schema.Types.ObjectId,
 			rsvp: String
 		}
 	],
 	items: [Schema.Types.ObjectId]
-
-	//eventItemList: {type: eventItems},
 	//eventMessagesFeed: {type: MessagesFeed}
 });
 
-eventSchema.methods.getByIds = function(obj) {
-
+eventSchema.methods.getItemsByIds = function(obj) {
 	var items = this.items;
 	Item.find({
 		'_id': {

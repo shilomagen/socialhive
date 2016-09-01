@@ -5,6 +5,7 @@ var express = require('express');
 var apiRouter = express.Router();
 var Event = require('./../models/event');
 var Item = require('./../models/item');
+var User = require('./../models/user');
 var mongoose = require('mongoose');
 
 apiRouter.use(function(req, res, next) {
@@ -103,31 +104,56 @@ apiRouter.route('/events/create')
 
 apiRouter.route('/events/:event_id/addUser')
 	.post(function(req, res) {
-		Event.findById(req.params.event_id, function(err, event) {
-			if (err) {
-				res.json({
-					success: false,
-					msg: err
-				});
-			} else {
-				event.participants.push({
-					name: req.body.name,
-					rsvp: req.body.rsvp
-				});
-				event.save(function(err) {
-					if (err) {
-						res.json({
-							success: false,
-							msg: err
-						});
-					} else {
-						res.send(event);
-					}
-				})
-			}
+			Event.findById(req.params.event_id, function(err, event) {
+				if (err) {
+					res.json({
+						success: false,
+						msg: err
+					});
+				} else {
+					var userEmail = req.body.email;
+					User.findOne({
+						'email': {
+							'$eq': userEmail
+						}
+					}, function(err, user) {
+						if (err) {
+							res.send({
+								success: false,
+								msg: err
+							});
+						} else {
+							if (!user) {
+								res.send({
+									success: false,
+									msg: 'user with mail ' + req.body.email + ' was not found'
+								});
+							} else {
+								event.participants.push({
+									userID: user._id,
+									rsvp: "INVITED"
+								});
+								event.save(function(err) {
+									if (err) {
+										res.json({
+											success: false,
+											msg: err
+										});
+									} else {
+										res.send({
+											success: true,
+											msg: 'user ' + user.email + ' was added to event ' + event.name
+										});
+									}
+								});
+							}
 
-		});
-	});
+						}
+					});
+				}
+			});
+		}
+	);
 
 apiRouter.route('/events/:event_id/addItem')
 	.post(function(req, res) {
@@ -178,7 +204,7 @@ apiRouter.route('/events/:event_id/getItems')
 					msg: err
 				});
 			} else {
-				event.getByIds({
+				event.getItemsByIds({
 					success: function(items) {
 						res.send({
 							success: true,

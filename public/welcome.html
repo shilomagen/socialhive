@@ -4,103 +4,89 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="style/welcome.css">
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <style>
-    html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+    html, body, h1, h2, h3, h4, h5 {
+        font-family: "Raleway", sans-serif
+    }
 </style>
 <body class="w3-light-grey">
-
-<!-- Top container -->
 <div class="w3-container w3-top w3-black w3-large w3-padding" style="z-index:4">
-    <button class="w3-btn w3-hide-large w3-padding-0 w3-hover-text-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
+    <button class="w3-btn w3-hide-large w3-padding-0 w3-hover-text-grey" onclick="w3_open();"><i class="fa fa-bars"></i>
+         Menu
+    </button>
     <span class="w3-right">Logo</span>
 </div>
-
-
-<!-- !PAGE CONTENT! -->
 <div class="w3-main" style="margin-left:300px;margin-top:43px;">
-
-    <!-- Header -->
     <header class="w3-container" style="padding-top:22px">
         <h2><b><i class="fa fa-home"></i> Welcome to Social Hive :) <br></b></h2>
-
-        <button id="signUpButton" class="w3-btn w3-deep-orange w3-xlarge" >Sign Up</button>
-        <button id="loginButton" class="w3-btn w3-grey w3-xlarge" >Login</button>
+        <button id="signUpButton" class="w3-btn w3-deep-orange w3-xlarge">Sign Up</button>
+        <button id="loginButton" class="w3-btn w3-grey w3-xlarge">Login</button>
     </header>
 
 </div>
-
-
 <div class="socialLoginContainer" style="margin: auto;
     width: 50%;
     padding: 10px;">
-
-
     <div class="formContainer">
-
         <div id="signUp" class="add_one_box">
-           <span style="text-align: center"> <h2><b> Sign Up <br></b></h2> </span>
+            <span style="text-align: center"> <h2><b> Sign Up <br></b></h2> </span>
+            <div class="w3-container">
 
-            <form class="w3-container">
-
-                <p>
-                    <label>First Name:</label>
-                    <input class="w3-input w3-border" type="text"></p>
-
-                <p>
-                    <label>Last Name:</label>
-                    <input class="w3-input w3-border" type="text"></p>
-
-                <p>
-                    <label>Password:</label>
-                    <input class="w3-input w3-border" type="password"></p>
+                <label for="fname">First Name:</label>
+                <input class="w3-input w3-border" id="fname" type="text">
 
 
-                <p>
-                    <label>Email:</label>
-                    <input class="w3-input w3-border" type="text"></p>
+                <label for="lname">Last Name:</label>
+                <input id="lastName" class="w3-input w3-border" id="lname" type="text">
 
+                <label for="email">Email:</label>
+                <input id="email" class="w3-input w3-border" type="text" required>
 
+                <label for="password">Password:</label>
+                <input id="password" class="w3-input w3-border" type="password" required>
 
-
-
-            </form>
+            </div>
 
             <p align="center">
-                <button class="w3-btn w3-deep-orange" type="submit">Register</button></p>
+                <button id="registerButton" class="w3-btn w3-deep-orange">Register</button>
+            </p>
         </div>
-
-
 
 
         <div id="login" class="add_one_box">
             <span style="text-align: center"> <h2><b> Login <br></b></h2> </span>
 
-            <form class="w3-container">
+            <div class="w3-container">
 
-                <p>
-                    <label>Email:</label>
-                    <input class="w3-input w3-border" type="text"></p>
 
-                <p>
-                    <label>Password:</label>
-                    <input class="w3-input w3-border" type="password"></p>
+                    <label for="userEmail">Email:</label>
+                    <input id="userEmail" class="w3-input w3-border" type="text">
 
-            </form>
+
+                    <label for="userPasswordLogin">Password:</label>
+                    <input id="userPasswordLogin" class="w3-input w3-border" type="password">
+
+            </div>
 
             <p align="center">
-                <button class="w3-btn w3-deep-orange" type="submit">Login</button></p>
+                <button id="loginUserButton" class="w3-btn w3-deep-orange" type="submit">Login</button>
+            </p>
         </div>
 
     </div>
 
+
+</div>
+<div class="server-response">
+    <span id="msgFromServer"></span>
 </div>
 </div>
 
 </body>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 <script src="scripts/welcome.js"></script>
 
 </html>
