@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<title>Social Hive</title>
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<head>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+
+
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <style>
+        html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+    </style>
+</head>
+
+
+
+<body class="w3-light-grey">
+
+<!-- Top container -->
+<div class="w3-container w3-top w3-black w3-large w3-padding" style="z-index:4">
+    <button class="w3-btn w3-hide-large w3-padding-0 w3-hover-text-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
+    <span class="w3-right">Logo</span>
+</div>
+
+<!-- Sidenav/menu -->
+<nav class="w3-sidenav w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidenav"><br>
+    <div class="w3-container w3-row">
+        <div class="w3-col s4">
+            <img src="http://www.w3schools.com/w3css/img_avatar3.png" class="w3-circle w3-margin-right" style="width:46px">
+        </div>
+        <div class="w3-col s8">
+            <span>Welcome, <strong>Mike</strong></span><br>
+            <a href="#" class="w3-hover-none w3-hover-text-red w3-show-inline-block"><i class="fa fa-envelope"></i></a>
+            <a href="#" class="w3-hover-none w3-hover-text-green w3-show-inline-block"><i class="fa fa-user"></i></a>
+            <a href="#" class="w3-hover-none w3-hover-text-blue w3-show-inline-block"><i class="fa fa-cog"></i></a>
+        </div>
+    </div>
+    <hr>
+    <div class="w3-container">
+        <h5>Dashboard</h5>
+    </div>
+    <a href="#" class="w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu">
+        <i class="fa fa-remove fa-fw"></i>  Close Menu</a>
+    <span style="cursor: pointer;"><a id="overviewContentButton" class="w3-padding"><i class="fa fa-users fa-fw"></i> Overview</a></span>
+    <span style="cursor: pointer;"><a id="createEventButton"  class="w3-padding"><i class="fa fa-eye fa-fw"></i> Create an Event</a></span>
+    <span style="cursor: pointer;"><a id="eventManagerButton" class="w3-padding"><i class="fa fa-users fa-fw"></i> Events Manager</a></span>
+    <span style="cursor: pointer;"><a id="userProfileButton" class="w3-padding"><i class="fa fa-bullseye fa-fw"></i> Profile</a></span>
+    <span style="cursor: pointer;"><a href="#" class="w3-padding"><i class="fa fa-cog fa-fw"></i> Settings</a><br><br></span>
+</nav></span>
+
+
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+    <!-- Header -->
+    <header class="w3-container" style="padding-top:22px">
+        <h5><b><i class="fa fa-dashboard"></i> My Dashboard</b></h5>
+    </header>
+
+
+
+    <!-- Middle content -->
+    <div id="mainContainer" class="w3-col m7" style="margin-left:5%; margin-right:5%;">
+
+
+
+        <!-- overview start -->
+        <div id="overviewContent" class="w3-row-padding">
+            <div class="w3-col m12">
+                <div class="w3-card-2 w3-round w3-white">
+                    <div class="w3-container w3-padding">
+                        <h6 class="w3-opacity">Social Media template by w3.css</h6>
+                        <p contenteditable="true" class="w3-border w3-padding">Status: Feeling Blue</p>
+                        <button type="button" class="w3-btn w3-theme"><i class="fa fa-pencil"></i>  Post</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- overview end -->
+
+        <!-- create an event start -->
+        <div id="createEvent" class="w3-container w3-card-2 w3-white w3-round w3-margin"><br>
+
+            <span style="text-align: center"> <h2><b> Create New Event <br></b></h2> </span>
+
+            <form class="w3-container">
+
+                <p>
+                    <label>Event Name:</label>
+                    <input class="w3-input w3-border" type="text"></p>
+
+                <p>
+                    <label>Event Start Date:</label>
+                    <input class="w3-input w3-border" type="date">
+                </p>
+
+                <p>
+                    <label>Event Finish Date:</label>
+                    <input class="w3-input w3-border" type="date">
+                </p>
+
+                <p>
+                    <label>Location:</label>
+                    <input class="w3-input w3-border" type="text"></p>
+
+                <div style="width: 60%">
+
+                    <label>Add Item:</label>
+
+
+                    <div class="input-group"> <input id="itemInfo" type="text" class="form-control">
+   <span class="input-group-btn">
+        <button onclick="onButtonClick_GetItemInfo()" class="btn btn-default"  type="button"> Add </button>
+   </span>
+                    </div>
+
+
+                </div>
+                <div id="itemsContainer" style="font-size: 18px;">
+                    <ul class="w3-ul w3-card-4" id="listItems">
+                        <li>Book and Poets
+                            <span onclick="this.parentElement.style.display='none'" class="w3-closebtn w3-margin-right w3-large">x</span>
+                        </li>
+                        <li>Cola <span onclick="this.parentElement.style.display='none'" class="w3-closebtn w3-margin-right w3-large">x</span></li>
+                        <li>Chips <span onclick="this.parentElement.style.display='none'" class="w3-closebtn w3-margin-right w3-large">x</span></li>
+                    </ul><Br>
+
+
+                </div>
+
+
+
+                </p>
+
+
+
+
+
+
+
+            </form>
+
+            <p align="center">
+                <button class="w3-btn w3-deep-orange" type="submit">Create Event</button></p>
+        </div>
+
+
+        <!-- create an event end -->
+
+
+        <!-- event manager start -->
+
+        <div id="eventManagerYourEvents" class="w3-container w3-card-2 w3-white w3-round w3-margin">
+
+            <span style="text-align: center"> <h2><b> Events Opened by You:</b></h2><Br><Br><Br>nothing to show here yet :(<br> </span>
+            </div>
+
+
+        <div id="eventManagerInvitedEvents" class="w3-container w3-card-2 w3-white w3-round w3-margin">
+
+            <span style="text-align: center"> <h2><b> Events You Are Invited to: <br></b></h2> <Br><Br><Br>nothing to show here yet :(<br></span>
+        </div>
+
+
+
+
+        </div>
+
+
+        <!-- event manager end -->
+
+        <!-- user profile start -->
+
+        <div id="userProfile" class="w3-container w3-card-2 w3-white w3-round w3-margin"><br>
+            <img src="img_avatar5.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+            <span class="w3-right w3-opacity">16 min</span>
+            <h4>Jane Doe</h4><br>
+            <hr class="w3-clear">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <button type="button" class="w3-btn w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i>  Like</button>
+            <button type="button" class="w3-btn w3-theme-d2 w3-margin-bottom"><i class="fa fa-comment"></i>  Comment</button>
+        </div>
+
+
+        <!-- user profile end -->
+
+
+        <!-- End Middle Column -->
+    </div>
+
+    <!-- Right Column -->
+    <div class="w3-col m3">
+
+        <div id="addParticipants" class="w3-container w3-card-2 w3-white w3-round w3-margin"><br>
+
+            <span style="text-align: center"> <h2><b> Add Participants <br></b></h2> </span>
+
+            <form class="w3-container">
+
+                <p>
+                    <input class="w3-input w3-border" type="text" placeholder="TomerOmri@Gmail.com"></p>
+                <p>
+                    <input class="w3-input w3-border" type="text" placeholder="ShiloMangam@Gmail.com"></p>
+                <p>
+                    <input class="w3-input w3-border" type="text" placeholder="BillJobes@Gmail.com"></p>
+
+                <p>
+                    <input class="w3-input w3-border" type="text" ></p>
+                <p>
+                    <input class="w3-input w3-border" type="text" ></p>
+                <p>
+                    <input class="w3-input w3-border" type="text" ></p>
+                <p>
+                    <input class="w3-input w3-border" type="text" ></p>
+                <p>
+                    <input class="w3-input w3-border" type="text" ></p>
+                <p>
+                    <input class="w3-input w3-border" type="text" ></p>
+
+
+
+
+            </form>
+
+        </div>
+
+
+
+        <div id="eventInfo" class="w3-container w3-card-2 w3-white w3-round w3-margin"><br>
+
+            <span style="text-align: center"> <h2><b> Event Info <br></b></h2> </span>
+
+            Nothing to show here yet..
+
+
+
+        </div>
+
+
+        <!-- End Right Column -->
+    </div>
+
+
+</div>
+
+
+</body>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+<script src="scripts/socialhive.js"></script>
+</html>
+

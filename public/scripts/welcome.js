@@ -1,0 +1,46 @@
+/**
+ * Created by Tomer on 8/30/2016.
+ */
+$(document).ready(function(){
+    $("#signUp").hide();
+    $("#login").hide();
+
+
+
+
+    $("#signUpButton").click(function() {
+        $("#login").hide();
+        $("#signUp").fadeToggle(600);
+
+    });
+
+    $("#loginButton").click(function() {
+        $("#signUp").hide();
+        $("#login").fadeToggle(600);
+
+    });
+});
+
+
+// Get the Sidenav
+var mySidenav = document.getElementById("mySidenav");
+
+// Get the DIV with overlay effect
+var overlayBg = document.getElementById("myOverlay");
+
+// Toggle between showing and hiding the sidenav, and add overlay effect
+function w3_open() {
+    if (mySidenav.style.display === 'block') {
+        mySidenav.style.display = 'none';
+        overlayBg.style.display = "none";
+    } else {
+        mySidenav.style.display = 'block';
+        overlayBg.style.display = "block";
+    }
+}
+
+// Close the sidenav with the close button
+function w3_close() {
+    mySidenav.style.display = "none";
+    overlayBg.style.display = "none";
+}
