@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var Item = require('./../models/item');
 var Schema = mongoose.Schema;
 
 
@@ -24,6 +25,24 @@ var eventSchema = new Schema({
 	//eventItemList: {type: eventItems},
 	//eventMessagesFeed: {type: MessagesFeed}
 });
+
+eventSchema.methods.getByIds = function(obj) {
+
+	var items = this.items;
+	Item.find({
+		'_id': {
+			$in: items
+		}
+	}, function(err, docs) {
+		if (err && obj.error) {
+			obj.error(err);
+		} else {
+			if (obj.success) {
+				obj.success(docs);
+			}
+		}
+	});
+};
 
 
 module.exports = mongoose.model('Event', eventSchema);

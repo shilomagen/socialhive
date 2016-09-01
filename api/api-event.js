@@ -128,6 +128,7 @@ apiRouter.route('/events/:event_id/addUser')
 
 		});
 	});
+
 apiRouter.route('/events/:event_id/addItem')
 	.post(function(req, res) {
 		Event.findById(req.params.event_id, function(err, event) {
@@ -151,15 +152,48 @@ apiRouter.route('/events/:event_id/addItem')
 					console.log(item._id);
 				});
 				event.items.push(mongoose.Types.ObjectId(item._id));
+				event.save(function(err) {
+					if (err) {
+						res.json({
+							success: false,
+							msg: err
+						});
+					}
+					console.log("event " + event.name + " saved successfully");
+				});
 				res.send({
 					success: true,
-					msg: item,
-					event: event
+					msg: item
 				});
 			}
 		});
-	})
-;
+	});
 
+apiRouter.route('/events/:event_id/getItems')
+	.get(function(req, res) {
+		Event.findById(req.params.event_id, function(err, event) {
+			if (err) {
+				res.json({
+					success: false,
+					msg: err
+				});
+			} else {
+				event.getByIds({
+					success: function(items) {
+						res.send({
+							success: true,
+							msg: items
+						});
+					}, error: function(err) {
+						res.send({
+							success: false,
+							msg: err
+						});
+					}
+				});
+			}
+
+		});
+	});
 
 module.exports = apiRouter;

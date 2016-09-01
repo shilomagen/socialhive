@@ -16,8 +16,7 @@ var userSchema = new Schema({
 	},
 	password: {
 		type: String,
-		required: true,
-		select: false
+		required: true
 	},
 	createdAtDate: {type: Date, default: Date.now},
 	profilePicturePath: String,//User ID_pic.jpg on images folder
@@ -54,4 +53,6 @@ userSchema.methods.generateJwt = function() {
 		exp: parseInt(expiry.getTime() / 1000)
 	}, "TEMP_SECRET"); //TODO: set the secret on the machine
 };
+
+
 module.exports = mongoose.model('User', userSchema);

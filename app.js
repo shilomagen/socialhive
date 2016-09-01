@@ -29,8 +29,11 @@ app.use(session({
 }));
 app.use(passport.initialize());
 
-app.use('/api', eventRouter);
-app.use('/', userRouter);
+
+
+
+app.use('/api' ,eventRouter);
+app.use('/user', userRouter);
 
 
 var User = require("./models/user");
