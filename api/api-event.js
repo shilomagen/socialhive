@@ -133,6 +133,17 @@ apiRouter.route('/events/:event_id/addUser')
 									userID: user._id,
 									rsvp: "INVITED"
 								});
+								user.eventInvited.push(event._id);
+								user.save(function(err){
+									if (err){
+										res.send({
+											success: false,
+											msg: err
+										});
+									} else {
+										console.log("event was added to user " + user.email);
+									}
+								});
 								event.save(function(err) {
 									if (err) {
 										res.json({
@@ -221,5 +232,32 @@ apiRouter.route('/events/:event_id/getItems')
 
 		});
 	});
+
+apiRouter.get('/events/:event_id/getParticipants', function(req, res) {
+	Event.findById(req.params.event_id, function(err, event) {
+		if (err) {
+			res.json({
+				success: false,
+				msg: err
+			});
+		} else {
+			event.getParticipantsByIds({
+				success: function(users) {
+					res.send({
+						success: true,
+						msg: users
+					});
+				}, error: function(err) {
+					res.send({
+						success: false,
+						msg: err
+					});
+				}
+			});
+		}
+	});
+});
+
+
 
 module.exports = apiRouter;

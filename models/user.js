@@ -24,8 +24,8 @@ var userSchema = new Schema({
 	userAddressCity: String,
 	userAddressRegion: String,
 	userAddressCountry: String,
-	userAge: {type: Number}
-
+	userAge: {type: Number},
+	eventInvited: [Schema.Types.ObjectId]
 	//eventsCreated: [event],
 	//eventsParticipate: [event],
 	//messages: [message]

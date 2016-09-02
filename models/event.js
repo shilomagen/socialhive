@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Item = require('./../models/item');
+var User = require('./../models/user');
 var Schema = mongoose.Schema;
 
 
@@ -38,6 +39,26 @@ eventSchema.methods.getItemsByIds = function(obj) {
 				obj.success(docs);
 			}
 		}
+	});
+};
+
+eventSchema.methods.getParticipantsByIds = function(obj){
+	var users = this.participants.map(function(user){
+		return user.userID;
+	});
+	User.find({
+		'_id': {
+			'$in': users
+		}
+	}, function(err, users){
+		if (err && obj.error){
+			obj.error(err);
+		} else {
+			if (obj.success){
+				obj.success(users);
+			}
+		}
+
 	});
 };
 
