@@ -64,7 +64,7 @@ $("#loginUserButton").click(function(e) {
 			if (obj.success) {
 				$('.server-response').css('background', 'blue');
 				$('#msgFromServer').text(obj.msg);
-				window.location.href = '/index.html';
+				window.location.href = '/profile.html';
 			} else {
 				$('.server-response').css('background', 'yellow');
 				$('#msgFromServer').text(obj.msg);
