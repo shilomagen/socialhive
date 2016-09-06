@@ -4,16 +4,18 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
 var jwt = require('jsonwebtoken');
+var Event = require('./../models/event');
 var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
 	firstName: String,
 	lastName: String,
 	email: {
-		type:String,
+		type: String,
 		unique: true,
 		required: true
 	},
+	eventCreated: [Schema.Types.ObjectId],
 	password: {
 		type: String,
 		required: true
@@ -31,7 +33,7 @@ var userSchema = new Schema({
 	//messages: [message]
 });
 
-userSchema.methods.setPassword = function(password){
+userSchema.methods.setPassword = function(password) {
 	var user = this;
 	bcrypt.hash(password, null, null, function(err, hash) {
 		if (err)
@@ -53,6 +55,24 @@ userSchema.methods.generateJwt = function() {
 		exp: parseInt(expiry.getTime() / 1000)
 	}, "TEMP_SECRET"); //TODO: set the secret on the machine
 };
+
+userSchema.methods.getEvents = function(obj) {
+	var events = obj.isCreated ? this.eventCreated : this.eventInvited;
+	Event.find({
+		'_id': {
+			$in: events
+		}
+	}, function(err, events) {
+		if (err && obj.error) {
+			obj.error(err);
+		} else {
+			if (obj.success) {
+				obj.success(events);
+			}
+		}
+	});
+};
+
 
 
 module.exports = mongoose.model('User', userSchema);

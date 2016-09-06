@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Item = require('./../models/item');
 var User = require('./../models/user');
+
 var Schema = mongoose.Schema;
 
 
@@ -24,6 +25,8 @@ var eventSchema = new Schema({
 	items: [Schema.Types.ObjectId]
 	//eventMessagesFeed: {type: MessagesFeed}
 });
+
+
 
 eventSchema.methods.getItemsByIds = function(obj) {
 	var items = this.items;
@@ -58,7 +61,6 @@ eventSchema.methods.getParticipantsByIds = function(obj){
 				obj.success(users);
 			}
 		}
-
 	});
 };
 

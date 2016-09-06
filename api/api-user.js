@@ -18,7 +18,6 @@ userRouter.use(function(req, res, next) {
 	}
 
 	else if (req.cookies.jwtToken) {
-		console.log(req.cookies);
 		jwt.verify(req.cookies.jwtToken, "TEMP_SECRET", function(err, decoder) {
 				if (err) {
 					res.send({
@@ -42,7 +41,6 @@ userRouter.use(function(req, res, next) {
 			msg: "please log in"
 		});
 	}
-
 });
 
 userRouter.route('/register')
@@ -84,20 +82,25 @@ userRouter.route('/login')
 					msg: "cant find email like yours"
 				});
 			} else {
-				var isRightPassword = user.validPassword(password);
-				if (isRightPassword) {
-					console.log(email + " is logged in!");
-					var token = user.generateJwt();
-					res.cookie('jwtToken', token, {maxAge: 900000, httpOnly: true});
-					res.send({
-						success: true,
-						msg: "user logged in"
-					});
-				} else {
-					res.status(500).send({
-						success: false,
-						msg: "password wrong"
-					});
+				try {
+					var isRightPassword = user.validPassword(password);
+					if (isRightPassword) {
+						console.log(email + " is logged in!");
+						var token = user.generateJwt();
+						res.cookie('jwtToken', token, {maxAge: 900000, httpOnly: true});
+						res.cookie('userId', user._id, {maxAge: 900000, httpOnly: true});
+						res.send({
+							success: true,
+							msg: "user logged in"
+						});
+					} else {
+						res.status(500).send({
+							success: false,
+							msg: "password wrong"
+						});
+					}
+				} catch (e) {
+					res.send("Please enter a password");
 				}
 			}
 		})
@@ -107,6 +110,7 @@ userRouter.route('/login')
 userRouter.route('/logout')
 	.get(function(req, res) {
 		res.clearCookie('jwtToken');
+		res.clearCookie('userId');
 		res.send({
 			success: true,
 			msg: "disconnected"
