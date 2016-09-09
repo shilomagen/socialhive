@@ -29,35 +29,24 @@
     <button class="w3-btn w3-hide-large w3-padding-0 w3-hover-text-grey" onclick="w3_open();"><i class="fa fa-bars"></i>
          Menu
     </button>
-    <span class="w3-right">Logo</span>
+    <span class="w3-right">You are now Logged In</span>
 </div>
 
 <!-- Sidenav/menu -->
-<nav class="w3-sidenav w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidenav"><br>
-    <div class="w3-container w3-row">
-        <div class="w3-col s4">
-            <img src="http://www.w3schools.com/w3css/img_avatar3.png" class="w3-circle w3-margin-right"
-                 style="width:46px">
-        </div>
-        <div class="w3-col s8">
-            <span>Welcome, <strong>Mike</strong></span><br>
-            <a href="#" class="w3-hover-none w3-hover-text-red w3-show-inline-block"><i class="fa fa-envelope"></i></a>
-            <a href="#" class="w3-hover-none w3-hover-text-green w3-show-inline-block"><i class="fa fa-user"></i></a>
-            <a href="#" class="w3-hover-none w3-hover-text-blue w3-show-inline-block"><i class="fa fa-cog"></i></a>
-        </div>
-    </div>
+<nav class="w3-sidenav w3-collapse w3-white " style="z-index:3;width:300px;" id="mySidenav"><br>
+
+
+    <div align="center">  <img src="/style/assets/logosmall.png"> </div>
     <hr>
     <div class="w3-container">
         <h5>Dashboard</h5>
     </div>
     <a href="#" class="w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu">
         <i class="fa fa-remove fa-fw"></i>  Close Menu</a>
-    <span style="cursor: pointer;"><a id="overviewContentButton" class="w3-padding"><i class="fa fa-users fa-fw"></i> Overview</a></span>
     <span style="cursor: pointer;"><a id="createEventButton" class="w3-padding"><i class="fa fa-eye fa-fw"></i> Create an Event</a></span>
     <span style="cursor: pointer;"><a id="eventManagerButton" class="w3-padding"><i class="fa fa-users fa-fw"></i> Events Manager</a></span>
-    <span style="cursor: pointer;"><a id="userProfileButton" class="w3-padding"><i class="fa fa-bullseye fa-fw"></i> Profile</a></span>
-    <span style="cursor: pointer;"><a href="#" class="w3-padding"><i
-            class="fa fa-cog fa-fw"></i> Settings</a><br><br></span>
+    <span style="cursor: pointer;"><a id="userProfileButton" class="w3-padding"><i class="fa fa-bullseye fa-fw"></i> Log Out</a></span>
+
 </nav>
 </span>
 
@@ -67,29 +56,15 @@
 
     <!-- Header -->
     <header class="w3-container" style="padding-top:22px">
-        <h5><b><i class="fa fa-dashboard"></i> My Dashboard</b></h5>
+        <h5><b><i class="fa fa-dashboard"></i> App news: 10.9 we are ready to launch!</b></h5>
+
+
     </header>
 
 
     <!-- Middle content -->
     <div id="mainContainer" class="w3-col m7" style="margin-left:5%; margin-right:5%;">
 
-
-        <!-- overview start -->
-        <div id="overviewContent" class="w3-row-padding">
-            <div class="w3-col m12">
-                <div class="w3-card-2 w3-round w3-white">
-                    <div class="w3-container w3-padding">
-                        <h6 class="w3-opacity">Social Media template by w3.css</h6>
-                        <p contenteditable="true" class="w3-border w3-padding">Status: Feeling Blue</p>
-                        <button type="button" class="w3-btn w3-theme"><i class="fa fa-pencil"></i>  Post</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <!-- overview end -->
 
         <!-- create an event start -->
         <div id="createEvent" class="w3-container w3-card-2 w3-white w3-round w3-margin"><br>
@@ -224,7 +199,7 @@
 
         <div id="eventManagerYourEvents" class="w3-container w3-card-2 w3-white w3-round w3-margin">
 
-            <span style="text-align: center"> <h2><b> Events Opened by You:</b></h2><Br><Br><Br>nothing to show here yet :(<br> </span>
+            <span style="text-align: center"> <h2><b> Events Opened by You:</b></h2> </span>
 
 
             <ul id="eventsListManager" class="w3-ul w3-blue-grey">
@@ -237,36 +212,15 @@
 
 
         <div id="eventManagerInvitedEvents" class="w3-container w3-card-2 w3-white w3-round w3-margin">
+            <span style="text-align: center"> <h2><b> Invited Events:</b></h2> </span>
+            <ul id="invitedeventsListManager" class="w3-ul w3-blue-grey">
 
-            <span style="text-align: center"> <h2><b> Events You Are Invited to: <br></b></h2> <Br><Br><Br>nothing to show here yet :(<br></span>
         </div>
 
 
     </div>
 
 
-    <!-- event manager end -->
-
-    <!-- user profile start -->
-
-    <div id="userProfile" class="w3-container w3-card-2 w3-white w3-round w3-margin"><br>
-        <img src="img_avatar5.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
-        <span class="w3-right w3-opacity">16 min</span>
-        <h4>Jane Doe</h4><br>
-        <hr class="w3-clear">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat.</p>
-        <button type="button" class="w3-btn w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i>  Like</button>
-        <button type="button" class="w3-btn w3-theme-d2 w3-margin-bottom"><i class="fa fa-comment"></i>  Comment
-        </button>
-    </div>
-
-
-    <!-- user profile end -->
-
-
-    <!-- End Middle Column -->
 </div>
 
 <!-- Right Column -->
@@ -300,7 +254,11 @@
                 </div>
             </div>
 
+        <div> Items:
+            <div id="sideItems">
 
+            </div>
+        </div>
 
         </div>
 

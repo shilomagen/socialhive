@@ -3,3 +3,9 @@
     width:200px;
     margin:0 auto;
 }
+
+body {
+    background-image: url("assets/photo-1444579084407-edbadf1d3795.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}

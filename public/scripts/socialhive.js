@@ -60,8 +60,10 @@ $("#eventManagerButton").click(function() {
         success: function(obj) {
             obj.success = true;
             if (obj.success) {
-                for (var i = 0; i < obj.length; ++i) {
-                    showSingleEvent(obj[i])
+                debugger;
+                var allEvents = obj.msg;
+                for (var i = 0; i < allEvents.length; ++i) {
+                    showSingleEvent(allEvents[i])
                 }
 
             } else {
@@ -74,6 +76,26 @@ $("#eventManagerButton").click(function() {
     });
 
 
+    $.ajax({
+        url: '/api/events/invited',
+        method: 'get',
+        success: function(obj) {
+            obj.success = true;
+            if (obj.success) {
+                debugger;
+                var allEvents = obj.msg;
+                for (var i = 0; i < allEvents.length; ++i) {
+                    showSingleInvitedEvent(allEvents[i])
+                }
+
+            } else {
+                $('#msgFromServer').text(obj.msg);
+            }
+        },
+        error: function(obj) {
+            $('#msgFromServer').text(obj.msg);
+        }
+    });
 
 
 
@@ -135,10 +157,8 @@ $("#createEventButtonNextToParticipants").click(function() {
                     data: { name: itemName.innerHTML },
                     success: function(obj) {
                         if (obj.success) {
-                            eventID = obj.msg;
-
-                            // moveToItemsDialog(eventID); // TODO: Open up a function with ajax call to create items (for loop that do ajax call for each item). after it do the same for partic.
-                        } else {
+                            console.log("happy items was added")
+                             } else {
                             $('#msgFromServer').text(obj.msg);
                         }
                     },
@@ -250,27 +270,66 @@ function showSingleEvent(event) {
     $('#eventsListManager').append(listItem);
 }
 
+
+
+function showSingleInvitedEvent(event) {
+debugger;
+    var orangeButton = $('<button class="w3-btn w3-orange" />').text("Going");
+    var listItem = $('<li />').text(event.name + orangeButton).data(event).click(showEventInfo);
+    $('#invitedeventsListManager').append(listItem);
+}
+
+
 function showEventInfo(oEvent){
     var elem = $(oEvent.target);
-    debugger;
-    elem.data();
+
+    var specificEvent = elem.data();
+    var eventIdToBring = elem.data()._id;
+
     $("#sideTile").fadeIn(500);
-    $("#sideName").text(elem.data().name);
-    $("#sideDate").text(elem.data().startDate);
-    $("#sideDateEnd").text(elem.data().endDate);
+    $("#sideName").text(specificEvent.name);
+    $("#sideDate").text(specificEvent.startDate);
+    $("#sideDateEnd").text(specificEvent.endDate);
+
+    var participantsToEvent;
+    var getParticipantsAds = "/api/events/" + eventIdToBring + "/getParticipants";
+    $.ajax({
+        url: getParticipantsAds,
+        method: 'get',
+        data: { event_id: eventIdToBring },
+        success: function(obj) {
+            if (obj.success) {
+               participantsToEvent = obj.msg;
+                for (var i=0; i<participantsToEvent.length; ++i)
+                {
+                    $("#sideParticipants").append(participantsToEvent[i].userID + '<br/>');
+                }
+            }
+        },
+        error: function(obj) {
+            $('#msgFromServer').text(obj.msg);
+        }
+    });
 
 
-    var participantsToEvent = elem.data().participants;
+    var itemsOfEvent;
+    var getItemsAds = "/api/events/" + eventIdToBring + "/getItems";
+    $.ajax({
+        url: getItemsAds,
+        method: 'get',
+        data: { event_id: eventIdToBring },
+        success: function(obj) {
+            if (obj.success) {
+                itemsOfEvent = obj.msg;
+                for (var i=0; i<itemsOfEvent.length; ++i)
+                {
+                    $("#sideParticipants").append(itemsOfEvent[i].name + '<br/>');
+                }
+            }
+        },
+        error: function(obj) {
+            $('#msgFromServer').text(obj.msg);
+        }
+    });
 
-    for (var i=0; i<participantsToEvent.length; ++i)
-    {
-        $("#sideParticipants").append(participantsToEvent[i]);
-    }
-
-    var itemsToEvent = elem.data().items;
-debugger;
-    for (var i=0; i<itemsToEvent .length; ++i)
-    {
-        $("#sideParticipants").append(itemsToEvent [i].name);
-    }
 }
