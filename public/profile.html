@@ -114,7 +114,7 @@
                     <div class="input-group">
                         <input id="itemInfo" type="text" class="form-control">
    <span class="input-group-btn">
-        <button onclick="onButtonClick_GetItemInfo()" class="btn btn-default" type="button"> Add Item to List </button>
+        <button onclick="saveItem()" class="btn btn-default" type="button"> Add Item to List </button>
    </span>
                     </div>
 
@@ -123,19 +123,9 @@
                 <br>
                 <div id="itemsContainer" style="font-size: 18px;">
                     <ul class="w3-ul w3-blue" id="listItems">
-                        <li>Book and Poets<span onclick="this.parentElement.style.display='none'"
-                                                class="w3-closebtn w3-margin-right w3-large">x</span></li>
-                        <li>Cola <span onclick="this.parentElement.style.display='none'"
-                                       class="w3-closebtn w3-margin-right w3-large">x</span></li>
-                        <li>Chips <span onclick="this.parentElement.style.display='none'"
-                                        class="w3-closebtn w3-margin-right w3-large">x</span></li>
                     </ul>
                     <Br>
-
-
                 </div>
-
-
                 <p align="center">
                     <button id="createEventButtonNextToParticipants" class="w3-btn w3-deep-blue" type="submit"> Next
                     </button>
@@ -143,29 +133,17 @@
             </div>
 
         </div>
-
-
-
-
-
         <!-- add Participants start -->
         <div id="addParticipantsToEvent" class="w3-container w3-card-2 w3-white w3-round w3-margin"><br>
-
-
             <span style="text-align: center"> <h2><b> Add Participants to the Events </b></h2> </span><br>
-
             <div class="w3-container">
                 <input id="participantEmail" class="w3-input w3-border" type="text" placeholder="TomerOmri@Gmail.com">
                     <span class="input-group-btn">
-                            <button onclick="onButtonClick_GetParticipantInfo()" class="btn btn-default" type="button"> Add Participant to List </button>
+                            <button onclick="saveParticipant()" class="btn btn-default" type="button"> Add Participant to List </button>
                        </span>
                 <br><br>
                 <div id="participantsContainer" style="font-size: 18px;">
                     <ul class="w3-ul w3-blue-grey" id="listParticipants">
-                        <li> <span>ShiloMangam@Gmail.com </span><span onclick="this.parentElement.style.display='none'"
-                                                         class="w3-closebtn w3-margin-right w3-large">x</span></li>
-                        <li><span>BillJobes@Gmail.com</span> <span onclick="this.parentElement.style.display='none'"
-                                                      class="w3-closebtn w3-margin-right w3-large">x</span></li>
                     </ul>
 
 
