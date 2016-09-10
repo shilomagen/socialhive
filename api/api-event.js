@@ -377,7 +377,8 @@ apiRouter.get('/events/:event_id/getParticipants', function(req, res) {
 						success: false,
 						msg: err
 					});
-				}
+				},
+				userSchema: User
 			});
 		}
 	});
