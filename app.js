@@ -28,10 +28,6 @@ app.use(session({
 	resave: true
 }));
 app.use(passport.initialize());
-
-
-
-
 app.use('/api' ,eventRouter);
 app.use('/user', userRouter);
 

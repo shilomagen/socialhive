@@ -3,8 +3,8 @@ var Schema = mongoose.Schema;
 
 var itemSchema = new Schema({
 	name: String,
-	isChecked: Boolean,
-	responsibilityUserID: String
+	isChecked: {type: Boolean, default: false},
+	responsibilityUserID: {type: String, default: null}
 });
 
 
