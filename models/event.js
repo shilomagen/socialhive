@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 var Item = require('./../models/item');
-var User = require('./../models/user');
 
 var Schema = mongoose.Schema;
 
@@ -49,7 +48,7 @@ eventSchema.methods.getParticipantsByIds = function(obj){
 	var users = this.participants.map(function(user){
 		return user.userID;
 	});
-	User.find({
+	obj.userSchema.find({
 		'_id': {
 			'$in': users
 		}
