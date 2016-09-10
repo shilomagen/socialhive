@@ -60,7 +60,6 @@ $("#eventManagerButton").click(function() {
         success: function(obj) {
             obj.success = true;
             if (obj.success) {
-                debugger;
                 var allEvents = obj.msg;
                 for (var i = 0; i < allEvents.length; ++i) {
                     showSingleEvent(allEvents[i])
@@ -82,7 +81,6 @@ $("#eventManagerButton").click(function() {
         success: function(obj) {
             obj.success = true;
             if (obj.success) {
-                debugger;
                 var allEvents = obj.msg;
                 for (var i = 0; i < allEvents.length; ++i) {
                     showSingleInvitedEvent(allEvents[i])
@@ -147,14 +145,17 @@ $("#createEventButtonNextToParticipants").click(function() {
    // var numOfItem = list.find('li').length;
     var eventFullAds = "/api/events/" + eventID + "/addItem";
 
-    var ul = document.getElementById("listItems");
-    var items = ul.getElementsByTagName("li");
-    for (var i = 0; i < items.length; ++i) {
-            var itemName = items[i]; //TODO: FIX THE NAME - WITHOUT SPAN
+
+
+        var listItems = $('#listItems').find('li');
+
+        for (var i = 0; i < listItems.length; ++i) {
+            var itemName = $(listItems[i]).find('span')[0].innerHTML;
+
                 $.ajax({
                     url: eventFullAds,
                     method: 'post',
-                    data: { name: itemName.innerHTML },
+                    data: { name: itemName },
                     success: function(obj) {
                         if (obj.success) {
                             console.log("happy items was added")
@@ -182,7 +183,7 @@ $("#createEventButtonNextToFinish").click(function() {
     var listParticipants = $('#listParticipants').find('li');
 
     for (var i = 0; i < listParticipants.length; ++i) {
-        var pEmail = $(listParticipants[i]).find('span')[0].innerHTML; //TODO: FIX THE NAME - WITHOUT SPAN
+        var pEmail = $(listParticipants[i]).find('span')[0].innerHTML;
         console.log(pEmail);
         $.ajax({
             url: eventFullAds,
@@ -235,14 +236,21 @@ function onButtonClick_GetItemInfo()
 }
 
 
+
 function saveItem(nameOfItem){
     var closeSpan = $('<span />');
     closeSpan.text('x').addClass('w3-closebtn w3-margin-right w3-large').on('click', function(){
         this.parentElement.style.display='none';
     });
-    var listItem = $('<li />').text(nameOfItem).append(closeSpan);
+
+    var itemSpan =  $('<span>').text(nameOfItem);
+
+    var listItem = $('<li />').append(itemSpan, closeSpan);
     $('#listItems').append(listItem);
 }
+
+
+
 
 function onButtonClick_GetParticipantInfo()
 {
@@ -273,16 +281,54 @@ function showSingleEvent(event) {
 
 
 function showSingleInvitedEvent(event) {
-debugger;
-    var orangeButton = $('<button class="w3-btn w3-orange" />').text("Going");
-    var listItem = $('<li />').text(event.name + orangeButton).data(event).click(showEventInfo);
+    var spacing = "          ";
+    var eventStatusID = event._id;
+    var maybeButton = $('<button />').addClass("w3-btn w3-orange").text("Maybe").click(function(){
+            updateStatus('Maybe', eventStatusID);
+    });
+    var goingButton = $('<button />').addClass("w3-btn w3-green").text("Going").click(function(){
+        updateStatus('Going', eventStatusID);
+    });
+    var notGoingButton = $('<button />').addClass("w3-btn w3-red").text("Not Going").click(function(){
+        updateStatus('Not Going', eventStatusID);
+    });
+    var listItem = $('<li />').text(event.name + spacing).append(goingButton, maybeButton, notGoingButton).data(event).click(showEventInfo);
     $('#invitedeventsListManager').append(listItem);
+}
+
+
+function updateStatus(statusArrival, eventStatusID){
+
+    $.ajax({
+        url: 'api/events/updateRSVP/' + eventStatusID,
+        method: 'put',
+        data: { rsvp: statusArrival },
+        success: function(obj) {
+            if (obj.success) {
+                toastr.info('Event Updated Successfully')
+            }
+        },
+        error: function(obj) {
+            $('#msgFromServer').text(obj.msg);
+        }
+    });
+
+
+}
+
+
+function initEventInfo() {
+    $('#sideName').text(' ');
+    $('#sideDate').text(' ');
+    $('#sideDateEnd').text(' ');
+    $('#sideParticipants').text(' ');
+    $('#sideItems').text(' ');
 }
 
 
 function showEventInfo(oEvent){
     var elem = $(oEvent.target);
-
+    initEventInfo();
     var specificEvent = elem.data();
     var eventIdToBring = elem.data()._id;
 
@@ -296,13 +342,12 @@ function showEventInfo(oEvent){
     $.ajax({
         url: getParticipantsAds,
         method: 'get',
-        data: { event_id: eventIdToBring },
         success: function(obj) {
             if (obj.success) {
                participantsToEvent = obj.msg;
                 for (var i=0; i<participantsToEvent.length; ++i)
                 {
-                    $("#sideParticipants").append(participantsToEvent[i].userID + '<br/>');
+                    $("#sideParticipants").append(participantsToEvent[i].email + '<br/>');
                 }
             }
         },
@@ -320,11 +365,7 @@ function showEventInfo(oEvent){
         data: { event_id: eventIdToBring },
         success: function(obj) {
             if (obj.success) {
-                itemsOfEvent = obj.msg;
-                for (var i=0; i<itemsOfEvent.length; ++i)
-                {
-                    $("#sideParticipants").append(itemsOfEvent[i].name + '<br/>');
-                }
+                obj.msg.length > 0 ?  addItemsToEvent(obj.msg) :  $("#sideItems").append($('<span />').text('There are no items'));
             }
         },
         error: function(obj) {
@@ -332,4 +373,35 @@ function showEventInfo(oEvent){
         }
     });
 
+
 }
+
+var addItemsToEvent = function(items){
+    items.forEach(function(item){
+
+        var eventItemID = item._id;
+
+        var itemDiv = $('<div />').addClass('itemDiv');
+        var itemText = $('<span />').text(item.name).addClass('itemText');
+        var itemSwitch = $('<input />').attr('type', 'checkbox').addClass('itemSwitch').click(function(event){
+            $.ajax({
+                url: 'api/events/updateItem/' + eventItemID,
+                method: 'put',
+                data: { isChecked: true },
+                success: function(obj) {
+                    if (obj.success) {
+
+                    }
+                },
+                error: function(obj) {
+                    $('#msgFromServer').text(obj.msg);
+                }
+            });
+        }).prop('disabled', item.isChecked);
+
+        itemDiv.append(itemSwitch, itemText);
+        $("#sideItems").append(itemDiv);
+    });
+
+
+};
