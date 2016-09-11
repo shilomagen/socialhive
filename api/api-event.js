@@ -77,10 +77,9 @@ apiRouter.put('/events/updateRSVP/:event_to_update', function(req, res) {
 					if (err) {
 						res.send({success: false, msg: err});
 					} else {
-						res.send(doc);
+						res.send({success: true});
 					}
 				});
-
 		}
 	});
 });
@@ -104,6 +103,7 @@ apiRouter.put('/events/updateItem/:item_id', function(req, res) {
 		}
 	});
 });
+
 apiRouter.route('/events/invited')
 	.get(function(req, res) {
 		User.findById(req.cookies.userId, function(err, user) {
@@ -187,7 +187,6 @@ apiRouter.route('/events/:event_id')
 apiRouter.route('/events/create')
 	.post(function(req, res) {
 		var event = new Event();
-		//TODO: post an event
 		event.name = req.body.name;
 		event.startDate = req.body.startDate;
 		event.numberOfParticipants = req.body.numberOfParticipants;
@@ -357,6 +356,7 @@ apiRouter.route('/events/:event_id/getItems')
 
 		});
 	});
+
 
 apiRouter.get('/events/:event_id/getParticipants', function(req, res) {
 	Event.findById(req.params.event_id, function(err, event) {

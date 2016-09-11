@@ -7,6 +7,7 @@ var jwt = require('jsonwebtoken');
 var Event = require('./../models/event');
 var Schema = mongoose.Schema;
 
+
 var userSchema = new Schema({
 	firstName: String,
 	lastName: String,
@@ -21,17 +22,15 @@ var userSchema = new Schema({
 		required: true
 	},
 	createdAtDate: {type: Date, default: Date.now},
-	profilePicturePath: String,//User ID_pic.jpg on images folder
+	profilePicturePath: String,
 	userAddressStreet: String,
 	userAddressCity: String,
 	userAddressRegion: String,
 	userAddressCountry: String,
 	userAge: {type: Number},
 	eventInvited: [Schema.Types.ObjectId]
-	//eventsCreated: [event],
-	//eventsParticipate: [event],
-	//messages: [message]
 });
+
 
 userSchema.methods.setPassword = function(password) {
 	var user = this;
@@ -72,7 +71,6 @@ userSchema.methods.getEvents = function(obj) {
 		}
 	});
 };
-
 
 
 module.exports = mongoose.model('User', userSchema);

@@ -4,7 +4,6 @@ var Item = require('./../models/item');
 var Schema = mongoose.Schema;
 
 
-//TODO: add participants -> user with rsvp
 var eventSchema = new Schema({
 	name: String,
 	numberOfParticipants: {type: Number},
@@ -22,9 +21,7 @@ var eventSchema = new Schema({
 		}
 	],
 	items: [Schema.Types.ObjectId]
-	//eventMessagesFeed: {type: MessagesFeed}
 });
-
 
 
 eventSchema.methods.getItemsByIds = function(obj) {
@@ -44,19 +41,19 @@ eventSchema.methods.getItemsByIds = function(obj) {
 	});
 };
 
-eventSchema.methods.getParticipantsByIds = function(obj){
-	var users = this.participants.map(function(user){
+eventSchema.methods.getParticipantsByIds = function(obj) {
+	var users = this.participants.map(function(user) {
 		return user.userID;
 	});
 	obj.userSchema.find({
 		'_id': {
 			'$in': users
 		}
-	}, function(err, users){
-		if (err && obj.error){
+	}, function(err, users) {
+		if (err && obj.error) {
 			obj.error(err);
 		} else {
-			if (obj.success){
+			if (obj.success) {
 				obj.success(users);
 			}
 		}

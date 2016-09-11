@@ -59,40 +59,6 @@ $("#eventManagerButton").click(function() {
 		}
 	});
 	$.ajax({
-		url: '/api/events',
-		method: 'get',
-		success: function(obj) {
-			obj.success = true;
-			if (obj.success) {
-				var allEvents = obj.msg;
-				for (var i = 0; i < allEvents.length; ++i) {
-					showSingleEvent(allEvents[i])
-				}
-			} else {
-				$('#msgFromServer').text(obj.msg);
-			}
-		},
-		error: function(obj) {
-			$('#msgFromServer').text(obj.msg);
-		}
-	});
-	$.ajax({
-		url: '/api/events/invited',
-		method: 'get',
-		success: function(obj) {
-			obj.success = true;
-			if (obj.success) {
-				var allEvents = obj.msg;
-				for (var i = 0; i < allEvents.length; ++i) {
-					showSingleInvitedEvent(allEvents[i])
-				}
-			}
-		},
-		error: function(obj) {
-			$('#msgFromServer').text(obj.msg);
-		}
-	});
-	$.ajax({
 		url: '/api/events/invited',
 		method: 'get',
 		success: function(obj) {
@@ -123,6 +89,20 @@ $("#userProfileButton").click(function() {
 	$("#eventInfo").hide();
 	$("#eventManager").hide();
 	$("#userProfile").fadeIn(600);
+});
+
+$('#logOutBtn').click(function() {
+	$.ajax({
+		url: '/user/logout',
+		method: 'get',
+		success: function() {
+			console.log("User logged out");
+			window.location.href='/index.html';
+		},
+		error: function() {
+			console.log("Error logging out");
+		}
+	});
 });
 
 $("#createEventButtonNext").click(function() {
@@ -233,21 +213,18 @@ function showSingleEvent(event) {
 }
 
 function showSingleInvitedEvent(event) {
-	var orangeButton = $('<button class="w3-btn w3-orange" />').text("Going");
-	var listItem = $('<li />').text(event.name + orangeButton).data(event).click(showEventInfo);
-	$('#invitedeventsListManager').append(listItem);
-	var spacing = "          ";
 	var eventStatusID = event._id;
-	var maybeButton = $('<button />').addClass("w3-btn w3-orange").text("Maybe").click(function() {
+	var maybeButton = $('<button />').addClass("w3-btn w3-orange statusBtn").text("Maybe").click(function() {
 		updateStatus('Maybe', eventStatusID);
 	});
-	var goingButton = $('<button />').addClass("w3-btn w3-green").text("Going").click(function() {
+	var goingButton = $('<button />').addClass("w3-btn w3-green statusBtn").text("Going").click(function() {
 		updateStatus('Going', eventStatusID);
 	});
-	var notGoingButton = $('<button />').addClass("w3-btn w3-red").text("Not Going").click(function() {
+	var notGoingButton = $('<button />').addClass("w3-btn w3-red statusBtn").text("Not Going").click(function() {
 		updateStatus('Not Going', eventStatusID);
 	});
-	var listItem = $('<li />').text(event.name + spacing).append(goingButton, maybeButton, notGoingButton).data(event).click(showEventInfo);
+
+	var listItem = $('<li />').text(event.name).append(goingButton, maybeButton, notGoingButton).data(event).click(showEventInfo);
 	$('#invitedeventsListManager').append(listItem);
 }
 

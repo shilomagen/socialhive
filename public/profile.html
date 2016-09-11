@@ -10,7 +10,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <script src="https://ajax.googleapis.com/ajagix/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+    <link rel="stylesheet" href="style/profile.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
@@ -37,7 +38,7 @@
 <nav class="w3-sidenav w3-collapse w3-white " style="z-index:3;width:300px;" id="mySidenav"><br>
 
 
-    <div align="center">  <img src="/style/assets/logosmall.png"> </div>
+    <div align="center"><img src="/style/assets/logosmall.png"></div>
     <hr>
     <div class="w3-container">
         <h5>Dashboard</h5>
@@ -46,7 +47,7 @@
         <i class="fa fa-remove fa-fw"></i>  Close Menu</a>
     <span style="cursor: pointer;"><a id="createEventButton" class="w3-padding"><i class="fa fa-eye fa-fw"></i> Create an Event</a></span>
     <span style="cursor: pointer;"><a id="eventManagerButton" class="w3-padding"><i class="fa fa-users fa-fw"></i> Events Manager</a></span>
-    <span style="cursor: pointer;"><a id="userProfileButton" class="w3-padding"><i class="fa fa-bullseye fa-fw"></i> Log Out</a></span>
+    <span style="cursor: pointer;"><a id="logOutBtn" class="w3-padding"><i class="fa fa-bullseye fa-fw"></i> Log Out</a></span>
 
 </nav>
 </span>
@@ -113,7 +114,7 @@
                     <label>Add Item:</label>
                     <div class="input-group">
                         <input id="itemInfo" type="text" class="form-control">
-   <span class="input-group-btn">
+                        <span class="input-group-btn">
         <button onclick="saveItem()" class="btn btn-default" type="button"> Add Item to List </button>
    </span>
                     </div>
@@ -138,7 +139,7 @@
             <span style="text-align: center"> <h2><b> Add Participants to the Events </b></h2> </span><br>
             <div class="w3-container">
                 <input id="participantEmail" class="w3-input w3-border" type="text" placeholder="TomerOmri@Gmail.com">
-                    <span class="input-group-btn">
+                <span class="input-group-btn">
                             <button onclick="saveParticipant()" class="btn btn-default" type="button"> Add Participant to List </button>
                        </span>
                 <br><br>
@@ -158,7 +159,6 @@
         </div>
 
 
-
         <!-- success start -->
         <div id="successContainer" class="w3-container w3-card-2 w3-white w3-round w3-margin"><br>
 
@@ -168,7 +168,6 @@
 
 
         </div>
-
 
 
         <!-- create an event end -->
@@ -207,52 +206,44 @@
 
     <div id="sideTile" class="w3-container w3-card-2 w3-white w3-round w3-margin">
 
-            <span style="text-align: center"> <h2><b> Event Info <br></b></h2> </span>
-            <div><b>Event Name:</b>
-                <span id="sideName">
-
-                </span>
-            </div>
-
-            <div> <b>Start Date:</b>
-                <span id="sideDate">
-
-                </span>
-            </div>
-
-        <div> <b>End Date:</b>
-                <span id="sideDateEnd">
+        <span style="text-align: center"> <h2><b> Event Info <br></b></h2> </span>
+        <div><b>Event Name:</b>
+            <span id="sideName">
 
                 </span>
         </div>
 
+        <div><b>Start Date:</b>
+            <span id="sideDate">
 
-            <div> <b>Participants:</b>
-                <div id="sideParticipants">
+                </span>
+        </div>
 
-                </div>
+        <div><b>End Date:</b>
+            <span id="sideDateEnd">
+            </span>
+        </div>
+
+        <div><b>Participants:</b>
+            <div id="sideParticipants">
+
             </div>
+        </div>
 
-        <div> <b>Items:</b>
+        <div><b>Items:</b>
             <div id="sideItems">
 
             </div>
         </div>
 
-        </div>
-
-
-
-
-
+    </div>
 </div>
 
-
 </body>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 <script src="scripts/socialhive.js"></script>
 </html>

@@ -7,12 +7,16 @@ $(document).ready(function() {
 });
 
 $("#signUpButton").click(function() {
+	$('#msgFromServer').empty();
+	$('.server-response').css('background','');
 	$("#login").hide();
 	$("#signUp").fadeToggle(600);
 
 });
 
 $("#loginButton").click(function() {
+	$('#msgFromServer').empty();
+	$('.server-response').css('background','');
 	$("#signUp").hide();
 	$("#login").fadeToggle(600);
 
@@ -20,6 +24,8 @@ $("#loginButton").click(function() {
 
 
 $("#registerButton").click(function(e) {
+	$('#msgFromServer').empty();
+	$('.server-response').css('background','');
 	e.preventDefault();
 	var user = {
 		fname: $('#fname').val(),
@@ -41,8 +47,9 @@ $("#registerButton").click(function(e) {
 			}
 		},
 		error: function(obj) {
+			var res = JSON.parse(obj.responseText);
 			$('.server-response').css('background', 'red');
-			$('#msgFromServer').text(obj.msg);
+			$('#msgFromServer').text(res.msg);
 		}
 	});
 
@@ -50,7 +57,10 @@ $("#registerButton").click(function(e) {
 });
 
 
+
+
 $("#loginUserButton").click(function(e) {
+
 	var userToLogin = {
 		email: $('#userEmail').val(),
 		password: $('#userPasswordLogin').val()
@@ -67,12 +77,13 @@ $("#loginUserButton").click(function(e) {
 				window.location.href = '/profile.html';
 			} else {
 				$('.server-response').css('background', 'yellow');
-				$('#msgFromServer').text(obj.msg);
+				$('#msgFromServer').text("Wrong email and password");
 			}
 		},
 		error: function(obj) {
-			$('.server-response').css('background', 'yellow');
-			$('#msgFromServer').text(obj.msg);
+			var res = JSON.parse(obj.responseText);
+			$('.server-response').css('background', 'red');
+			$('#msgFromServer').text(res.msg);
 		}
 	});
 
