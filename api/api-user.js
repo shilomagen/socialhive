@@ -43,6 +43,19 @@ userRouter.use(function(req, res, next) {
 	}
 });
 
+userRouter.delete('/remove', function(req, res) {
+	User.remove({ email: req.body.email }, function(err, user) {
+		if (err) {
+			console.log(req.body.email + " was not deleted successfully");
+		}
+		else {
+			console.log(user);
+			console.log(req.body.email + " was deleted successfully");
+		}
+	});
+
+});
+
 userRouter.route('/register')
 	.post(function(req, res) {
 		var user = new User();
@@ -106,6 +119,7 @@ userRouter.route('/login')
 		})
 
 	});
+
 
 userRouter.route('/logout')
 	.get(function(req, res) {

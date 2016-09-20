@@ -14,7 +14,8 @@ var userSchema = new Schema({
 	email: {
 		type: String,
 		unique: true,
-		required: true
+		required: true,
+		index: true
 	},
 	eventCreated: [Schema.Types.ObjectId],
 	password: {

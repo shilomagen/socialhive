@@ -40,7 +40,6 @@ eventSchema.methods.getItemsByIds = function(obj) {
 		}
 	});
 };
-
 eventSchema.methods.getParticipantsByIds = function(obj) {
 	var users = this.participants.map(function(user) {
 		return user.userID;
