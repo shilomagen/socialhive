@@ -49,7 +49,6 @@ userRouter.delete('/remove', function(req, res) {
 			console.log(req.body.email + " was not deleted successfully");
 		}
 		else {
-			console.log(user);
 			console.log(req.body.email + " was deleted successfully");
 		}
 	});
@@ -107,7 +106,7 @@ userRouter.route('/login')
 							msg: "user logged in"
 						});
 					} else {
-						res.status(500).send({
+						res.status(400).send({
 							success: false,
 							msg: "password wrong"
 						});

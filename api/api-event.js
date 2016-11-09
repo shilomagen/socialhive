@@ -324,7 +324,7 @@ apiRouter.route('/events/:event_id/addItem')
 				});
 				res.send({
 					success: true,
-					msg: item
+					msg: item.name + " was added to event"
 				});
 			}
 		});
