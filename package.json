@@ -26,6 +26,7 @@
     "express": "^4.14.0",
     "express-session": "^1.14.1",
     "express-validator": "^2.20.8",
+    "extend": "^3.0.0",
     "jsonwebtoken": "^7.1.9",
     "jwt-simple": "^0.5.0",
     "mongodb": "^2.2.6",
@@ -33,6 +34,7 @@
     "morgan": "^1.7.0",
     "passport": "^0.3.2",
     "passport-http-bearer": "^1.0.1",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "q": "^1.4.1"
   }
 }

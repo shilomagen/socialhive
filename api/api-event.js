@@ -8,6 +8,8 @@ var Item = require('./../models/item');
 var User = require('./../models/user');
 var jwt = require('jsonwebtoken');
 var mongoose = require('mongoose');
+mongoose.Promise = Promise;
+var consts = require('./../consts');
 
 var Schema = mongoose.Schema;
 
@@ -22,7 +24,6 @@ apiRouter.use(function(req, res, next) {
 			} else {
 				next();
 			}
-
 		}
 	);
 });
@@ -186,108 +187,39 @@ apiRouter.route('/events/:event_id')
 
 apiRouter.route('/events/create')
 	.post(function(req, res) {
-		var event = new Event();
-		event.name = req.body.name;
-		event.startDate = req.body.startDate;
-		event.numberOfParticipants = req.body.numberOfParticipants;
-		event.organizerID = req.cookies.userId;
-		User.findById(req.cookies.userId, function(err, user) {
-			if (err) {
-				res.send({
-					success: false,
-					msg: err
-				});
-			} else {
-				user.eventCreated.push(event._id);
-				user.save(function(err) {
-					if (err) {
-						res.send({
-							success: false,
-							msg: err
-						});
-					} else {
-						console.log("event " + event.name + " was added to user " + user.email);
-					}
-				});
-			}
-		});
-		event.save(function(err) {
-			if (err) {
-				res.json({
-					success: false,
-					msg: err
-				});
-			}
-			res.json({
-				success: true,
-				msg: event._id
+		var eventInfo = {
+			name: req.body.name,
+			startDate: req.body.startDate,
+			endDate: req.body.endDate,
+			organizerID: req.cookies.userId
+		};
+		Event.createNewEvent(eventInfo)
+			.then(User.updateUserEventCreated)
+			.then(function(event) {
+				console.log("Event " + event.name + " was created successfully");
+				res.send({success: true, msg: event});
 			})
-		})
+			.catch(console.log)
+			.done();
 	});
 
-apiRouter.route('/events/:event_id/addUser')
-	.post(function(req, res) {
-			Event.findById(req.params.event_id, function(err, event) {
-				if (err) {
-					res.json({
-						success: false,
-						msg: err
-					});
-				} else {
-					var userEmail = req.body.email;
-					User.findOne({
-						'email': {
-							'$eq': userEmail
-						}
-					}, function(err, user) {
-						if (err) {
-							res.send({
-								success: false,
-								msg: err
-							});
-						} else {
-							if (!user) {
-								res.send({
-									success: false,
-									msg: 'user with mail ' + req.body.email + ' was not found'
-								});
-							} else {
-								event.participants.push({
-									userID: user._id,
-									rsvp: "INVITED"
-								});
-								user.eventInvited.push(event._id);
-								user.save(function(err) {
-									if (err) {
-										res.send({
-											success: false,
-											msg: err
-										});
-									} else {
-										console.log("event was added to user " + user.email);
-									}
-								});
-								event.save(function(err) {
-									if (err) {
-										res.json({
-											success: false,
-											msg: err
-										});
-									} else {
-										res.send({
-											success: true,
-											msg: 'user ' + user.email + ' was added to event ' + event.name
-										});
-									}
-								});
-							}
+var addUserToEvent = function addUserToEvent(req, res) {
+	var event;
+	Event.findById(req.params.event_id).exec()
+		.then(eventFromDB=> {
+			event = eventFromDB;
+			return User.findOne({'email': req.body.email}).exec()
+		})
+		.then(user => user ? event.addUserToEvent(user, res) : User.handleNonRegisteredUser(req.body.email))
+		.catch((err)=>{
+			console.log(err);
+			res.send({success: false, msg: err})
+		});
+};
 
-						}
-					});
-				}
-			});
-		}
-	);
+apiRouter.route('/events/:event_id/addUser').post(addUserToEvent);
+
+
 
 
 apiRouter.route('/events/:event_id/addItem')

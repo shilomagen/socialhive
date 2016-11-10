@@ -5,6 +5,7 @@ var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
 var jwt = require('jsonwebtoken');
 var Event = require('./../models/event');
+var Q = require('q');
 var Schema = mongoose.Schema;
 
 
@@ -41,7 +42,6 @@ userSchema.methods.setPassword = function(password) {
 		user.password = hash;
 	});
 };
-
 userSchema.methods.validPassword = function(password) {
 	return bcrypt.compareSync(password, this.password);
 };
@@ -55,7 +55,6 @@ userSchema.methods.generateJwt = function() {
 		exp: parseInt(expiry.getTime() / 1000)
 	}, "TEMP_SECRET"); //TODO: set the secret on the machine
 };
-
 userSchema.methods.getEvents = function(obj) {
 	var events = obj.isCreated ? this.eventCreated : this.eventInvited;
 	Event.find({
@@ -73,5 +72,29 @@ userSchema.methods.getEvents = function(obj) {
 	});
 };
 
-
-module.exports = mongoose.model('User', userSchema);
+userSchema.statics.updateUserEventCreated = function(event) {
+	var deferred = Q.defer();
+	var userID = event.organizerID;
+	User.findById(userID, function(err, user) {
+		if (err) {
+			deferred.reject(err);
+		} else {
+			user.eventCreated.push(event._id);
+			user.save(function(err) {
+				if (err) {
+					deferred.reject(err);
+				} else {
+					console.log("Event " + event.name + " was added to " + user.email);
+					deferred.resolve(event);
+				}
+			});
+		}
+	});
+	return deferred.promise;
+};
+userSchema.statics.handleNonRegisteredUser = function(email){
+	//TODO: when user not registered, what to do?
+	return true;
+};
+var User = mongoose.model('User', userSchema);
+module.exports = User;

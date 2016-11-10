@@ -1,5 +1,8 @@
 var mongoose = require('mongoose');
 var Item = require('./../models/item');
+var Q = require('q');
+var extend = require('extend');
+var consts = require('./../consts');
 
 var Schema = mongoose.Schema;
 
@@ -40,7 +43,33 @@ eventSchema.methods.getItemsByIds = function(obj) {
 		}
 	});
 };
+
+eventSchema.methods.addUserToEvent = function(user, res) {
+	var deferred = Q.defer();
+	var eventToAdd;
+	this.participants.push({
+		userID: user._id,
+		rsvp: "INVITED"
+	});
+	this.save()
+		.then((event)=> {
+			eventToAdd = event;
+			console.log(user.email + " was added to event '" + event.name + "' successfully");
+			user.eventInvited.push(event._id);
+			return user.save();
+		})
+		.then((user) => {
+			console.log("Event '" + eventToAdd.name + "' was added to " + user.email + " successfully");
+			res.send({success: true, msg: user.email + " was added to event: " + eventToAdd.name + " successfully"});
+			deferred.resolve(user);
+		})
+		.catch(deferred.reject);
+	return deferred.promise;
+};
+
 eventSchema.methods.getParticipantsByIds = function(obj) {
+	var deferred = Q.defer();
+
 	var users = this.participants.map(function(user) {
 		return user.userID;
 	});
@@ -58,6 +87,20 @@ eventSchema.methods.getParticipantsByIds = function(obj) {
 		}
 	});
 };
+eventSchema.statics.createNewEvent = function(eventInfo) {
+	var deferred = Q.defer();
+	var event = new Event();
+	extend(event, eventInfo);
+	event.save(function(err) {
+		if (err) {
+			deferred.reject(err);
+		} else {
+			deferred.resolve(event);
+		}
+	});
+	return deferred.promise;
+};
 
 
-module.exports = mongoose.model('Event', eventSchema);
+var Event = mongoose.model('Event', eventSchema);
+module.exports = Event;
